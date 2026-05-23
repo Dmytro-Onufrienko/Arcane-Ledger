@@ -1,0 +1,249 @@
+.root {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── LEFT: personality + notes ────────────────────────── */
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  overflow-y: auto;
+  padding: var(--space-5);
+  border-right: 1px solid var(--color-outline-dim);
+}
+
+/* 2×2 personality grid */
+.personalityGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+/* Note block */
+.noteBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-high);
+  transition: border-color var(--transition-fast);
+}
+
+.noteBlockFocused {
+  border-color: var(--color-gold);
+}
+
+.noteLabel {
+  color: var(--color-on-surface-dim);
+}
+
+.noteTextarea {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-on-surface);
+  background: transparent;
+  border: none;
+  resize: none;
+  width: 100%;
+  flex: 1;
+}
+
+.noteTextarea:focus { outline: none; }
+
+.noteTextarea::placeholder {
+  color: var(--color-on-surface-dim);
+  opacity: 0.4;
+  font-style: italic;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: var(--color-outline-dim);
+}
+
+.dividerDiamond {
+  font-size: 8px;
+  color: var(--color-gold);
+  opacity: 0.5;
+}
+
+/* ── RIGHT: journal ───────────────────────────────────── */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow: hidden;
+  padding: var(--space-4);
+}
+
+.journalTitle { color: var(--color-on-surface-dim); }
+
+/* Input area */
+.journalInputBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.journalInput {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-on-surface);
+  background: var(--color-surface-high);
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  resize: none;
+  width: 100%;
+  transition: border-color var(--transition-fast);
+}
+.journalInput:focus { border-color: var(--color-gold); outline: none; }
+.journalInput::placeholder {
+  color: var(--color-on-surface-dim);
+  opacity: 0.4;
+  font-style: italic;
+}
+
+.journalAddBtn {
+  align-self: flex-end;
+  padding: 5px 14px;
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: transparent;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.journalAddBtn:hover:not(:disabled) { background: var(--color-gold); color: var(--color-primary); }
+.journalAddBtn:disabled { opacity: 0.3; cursor: default; }
+
+/* Divider hint */
+.journalHint {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-on-surface-dim);
+  opacity: 0.4;
+  text-align: right;
+}
+
+/* Journal list */
+.journalList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.journalEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-6) 0;
+  opacity: 0.3;
+}
+
+.journalEmptyIcon { font-size: 28px; }
+
+.journalEmptyText {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--color-on-surface-dim);
+}
+
+/* Entry */
+.journalEntry {
+  padding: var(--space-3);
+  background: var(--color-surface-high);
+  border-radius: var(--radius-md);
+  border-left: 2px solid var(--color-outline-dim);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: border-color var(--transition-fast);
+}
+.journalEntry:hover { border-color: var(--color-gold); }
+
+.entryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.entryDate {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-gold);
+  opacity: 0.7;
+}
+
+.entryActions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+.journalEntry:hover .entryActions { opacity: 1; }
+
+.entryEditBtn, .entryDeleteBtn {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 9px;
+  color: var(--color-on-surface-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.entryEditBtn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+.entryDeleteBtn:hover { border-color: var(--color-error); color: var(--color-error); }
+
+.entryText {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-on-surface-dim);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.entryEditArea {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-on-surface);
+  background: var(--color-surface);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
+  resize: none;
+  width: 100%;
+}
+.entryEditArea:focus { outline: none; }
