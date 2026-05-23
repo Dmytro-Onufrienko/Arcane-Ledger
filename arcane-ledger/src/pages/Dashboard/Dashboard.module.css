@@ -1,0 +1,54 @@
+.root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header — draggable region for frameless window */
+.header {
+  -webkit-app-region: drag;
+  flex-shrink: 0;
+  padding: var(--space-4) var(--space-6) var(--space-3);
+  padding-top: 20px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-left: 80px; /* leave space for macOS traffic lights */
+  padding-bottom: var(--space-3);
+  -webkit-app-region: drag;
+}
+
+.d20 {
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-serif), serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1;
+}
+
+/* Main scrollable area */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Character grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-6);
+  align-content: start;
+}

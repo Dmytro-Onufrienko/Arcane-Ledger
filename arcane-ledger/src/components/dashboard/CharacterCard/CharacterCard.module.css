@@ -1,0 +1,230 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  min-height: 220px;
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+  border-radius: var(--radius-md);
+}
+
+/* Portrait */
+.portrait {
+  width: 140px;
+  min-width: 140px;
+  height: 100%;
+  min-height: 220px;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--color-outline);
+}
+
+.portraitImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.portraitPlaceholder svg {
+  width: 60px;
+  height: 80px;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.name {
+  font-family: var(--font-serif), serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
+  color: var(--color-on-surface-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Context menu */
+.menuWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.menuBtn {
+  font-family: var(--font-mono), monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-outline);
+  padding: 0 4px;
+  line-height: 1;
+  letter-spacing: 2px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+  -webkit-app-region: no-drag;
+}
+
+.menuBtn:hover { color: var(--color-on-surface); }
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: var(--color-surface-high);
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  z-index: 100;
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
+  color: var(--color-error);
+  transition: background var(--transition-fast);
+}
+
+.menuItem:hover { background: var(--color-surface-highest); }
+
+/* Badges */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Level */
+.levelRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.levelLabel {
+  color: var(--color-on-surface-dim);
+}
+
+.levelNum {
+  font-family: var(--font-serif), serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1;
+}
+
+/* HP */
+.hpSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hpLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hpValues {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--color-on-surface-dim);
+}
+
+.hpTrack {
+  height: 6px;
+  background: var(--color-surface-highest);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.hpFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal), background-color var(--transition-normal);
+}
+
+/* Stats footer */
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-outline-dim);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.statLabel {
+  color: var(--color-on-surface-dim);
+}
+
+.statVal {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.statDivider {
+  width: 1px;
+  height: 24px;
+  background: var(--color-outline-dim);
+}

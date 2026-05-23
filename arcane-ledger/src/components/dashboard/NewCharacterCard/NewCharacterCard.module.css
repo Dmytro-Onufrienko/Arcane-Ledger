@@ -1,0 +1,35 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 220px;
+  width: 100%;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: var(--space-6);
+}
+
+.plus {
+  font-family: var(--font-serif), serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--color-outline);
+  line-height: 1;
+  transition: color var(--transition-fast);
+}
+
+.label {
+  font-family: var(--font-sans), sans-serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--color-on-surface-dim);
+  transition: color var(--transition-fast);
+}
+
+.card:hover .plus,
+.card:hover .label {
+  color: var(--color-gold);
+}
