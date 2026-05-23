@@ -121,6 +121,8 @@ export function update(id: string, patch: any) {
     if (patch.bonds !== undefined) dbPatch.bonds = patch.bonds
     if (patch.flaws !== undefined) dbPatch.flaws = patch.flaws
     if (patch.notes !== undefined) dbPatch.notes = patch.notes
+    if (patch.conditions !== undefined) dbPatch.conditions = JSON.stringify(patch.conditions)
+    if (patch.exhaustionLevel !== undefined) dbPatch.exhaustion_level = patch.exhaustionLevel
 
     const setClauses = Object.keys(dbPatch).map(k => `${k} = ?`).join(', ')
     db.prepare(`UPDATE characters SET ${setClauses} WHERE id = ?`)
@@ -303,6 +305,8 @@ function hydrate(row: any) {
     bonds: row.bonds ?? '',
     flaws: row.flaws ?? '',
     notes: row.notes ?? '',
+    conditions: JSON.parse(row.conditions ?? '[]'),
+    exhaustionLevel: row.exhaustion_level ?? 0,
     createdAt: row.created_at,
     updatedAt: row.updated_at
   }

@@ -65,6 +65,9 @@ export interface Character {
   attacks: Attack[]
 
   traits: string; ideals: string; bonds: string; flaws: string; notes: string
+
+  conditions: string[]
+  exhaustionLevel: number
 }
 
 export type NewCharacter = Omit<Character, 'id' | 'createdAt' | 'updatedAt'>

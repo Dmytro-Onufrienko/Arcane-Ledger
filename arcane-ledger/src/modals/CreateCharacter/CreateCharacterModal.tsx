@@ -73,6 +73,7 @@ export default function CreateCharacterModal() {
         inventory: [],
         attacks: [],
         traits: '', ideals: '', bonds: '', flaws: '', notes: '',
+        conditions: [], exhaustionLevel: 0,
       })
       closeModal('createCharacter')
       setDraft(INITIAL_DRAFT)

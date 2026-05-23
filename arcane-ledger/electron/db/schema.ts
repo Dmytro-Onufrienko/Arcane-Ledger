@@ -115,4 +115,11 @@ export function applySchema(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_attacks_char    ON attacks(character_id);
     CREATE INDEX IF NOT EXISTS idx_inventory_char  ON inventory(character_id);
   `)
+
+  // Additive migrations for existing DBs
+  const cols = (db.prepare('PRAGMA table_info(characters)').all() as any[]).map(c => c.name)
+  if (!cols.includes('conditions'))
+    db.exec("ALTER TABLE characters ADD COLUMN conditions TEXT DEFAULT '[]'")
+  if (!cols.includes('exhaustion_level'))
+    db.exec('ALTER TABLE characters ADD COLUMN exhaustion_level INTEGER DEFAULT 0')
 }

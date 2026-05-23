@@ -109,6 +109,54 @@
   -webkit-app-region: no-drag;
 }
 
+/* Conditions button + popover */
+.condWrapper {
+  position: relative;
+}
+
+.condBtn {
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-outline-dim);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.condBtn:hover { border-color: var(--color-gold); color: var(--color-text); }
+
+.condBtnActive {
+  border-color: #b03030;
+  color: #ff8080;
+}
+
+.condBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  background: #b03030;
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.condPopover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 200;
+}
+
 .editBtn, .longRestBtn, .shortRestBtn {
   padding: 6px 12px;
   border-radius: var(--radius-md);

@@ -1,6 +1,8 @@
+import { useState, useRef, useEffect } from 'react'
 import type { Character } from '@/types/character'
 import { CLASS_DEFINITIONS } from '@/constants/classes'
 import { getTotalLevel, getProficiencyBonus, formatMod } from '@/utils/calculations'
+import ConditionsPanel from '@/components/character/shared/ConditionsPanel/ConditionsPanel'
 import s from './CharacterHeader.module.css'
 
 interface Props {
@@ -9,11 +11,25 @@ interface Props {
   onLongRest: () => void
   onShortRest: () => void
   onEdit: () => void
+  onConditionsChange: (conditions: string[], exhaustionLevel: number) => void
 }
 
-export default function CharacterHeader({ character: char, onBack, onLongRest, onShortRest, onEdit }: Props) {
+export default function CharacterHeader({ character: char, onBack, onLongRest, onShortRest, onEdit, onConditionsChange }: Props) {
   const totalLevel = getTotalLevel(char)
   const profBonus = getProficiencyBonus(totalLevel)
+  const [condOpen, setCondOpen] = useState(false)
+  const condRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!condOpen) return
+    const handler = (e: MouseEvent) => {
+      if (condRef.current && !condRef.current.contains(e.target as Node)) setCondOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [condOpen])
+
+  const activeCount = char.conditions.length + (char.exhaustionLevel > 0 ? 1 : 0)
 
   return (
     <header className={s.header}>
@@ -54,6 +70,25 @@ export default function CharacterHeader({ character: char, onBack, onLongRest, o
       </div>
 
       <div className={s.actions}>
+        <div className={s.condWrapper} ref={condRef}>
+          <button
+            className={`${s.condBtn} ${activeCount > 0 ? s.condBtnActive : ''}`}
+            onClick={() => setCondOpen(v => !v)}
+          >
+            ⚠ Умови{activeCount > 0 && <span className={s.condBadge}>{activeCount}</span>}
+          </button>
+          {condOpen && (
+            <div className={s.condPopover}>
+              <ConditionsPanel
+                conditions={char.conditions}
+                exhaustionLevel={char.exhaustionLevel}
+                onChange={(conditions, exhaustionLevel) => {
+                  onConditionsChange(conditions, exhaustionLevel)
+                }}
+              />
+            </div>
+          )}
+        </div>
         <button className={s.editBtn} onClick={onEdit}>✏ Редагувати</button>
         <button className={s.longRestBtn} onClick={onLongRest}>🌙 Довг. відпочинок</button>
         <button className={s.shortRestBtn} onClick={onShortRest}>🌿 Коротк.</button>

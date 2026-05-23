@@ -64,6 +64,10 @@ export default function Character() {
     await window.api.spellSlots.restoreShortRest(char.id)
   }
 
+  const handleConditionsChange = (conditions: string[], exhaustionLevel: number) => {
+    handleUpdate({ conditions, exhaustionLevel })
+  }
+
   return (
     <div className={`parchment-bg ${s.root}`}>
       <CharacterHeader
@@ -72,6 +76,7 @@ export default function Character() {
         onLongRest={handleLongRest}
         onShortRest={handleShortRest}
         onEdit={() => setEditOpen(true)}
+        onConditionsChange={handleConditionsChange}
       />
       <TabBar activeTab={activeTab} onTab={setActiveTab} />
       <div className={s.tabContent}>
