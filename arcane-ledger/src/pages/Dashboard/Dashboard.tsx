@@ -11,10 +11,18 @@ import s from './Dashboard.module.css'
 
 export default function Dashboard() {
   const { characters, loading, fetchAll, deleteCharacter } = useCharacterStore()
-  const { openModal, isModalOpen } = useUIStore()
+  const { openModal, closeModal, isModalOpen } = useUIStore()
   const navigate = useNavigate()
 
   useEffect(() => { fetchAll() }, [fetchAll])
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal('createCharacter')
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [closeModal])
 
   const handleCreate = () => openModal('createCharacter')
 
