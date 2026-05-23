@@ -27,6 +27,10 @@ export const useCharacterStore = create<CharacterStore>((set) => ({
   },
 
   updateCharacter: async (id, patch) => {
+    // Optimistic update — instant UI, then reconcile with DB truth
+    set(s => ({
+      characters: s.characters.map(c => c.id === id ? { ...c, ...patch } : c)
+    }))
     await window.api.characters.update(id, patch)
     const updated = await window.api.characters.getById(id)
     set(s => ({

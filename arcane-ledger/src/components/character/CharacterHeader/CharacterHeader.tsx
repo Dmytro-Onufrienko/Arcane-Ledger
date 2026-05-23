@@ -8,9 +8,10 @@ interface Props {
   onBack: () => void
   onLongRest: () => void
   onShortRest: () => void
+  onEdit: () => void
 }
 
-export default function CharacterHeader({ character: char, onBack, onLongRest, onShortRest }: Props) {
+export default function CharacterHeader({ character: char, onBack, onLongRest, onShortRest, onEdit }: Props) {
   const totalLevel = getTotalLevel(char)
   const profBonus = getProficiencyBonus(totalLevel)
 
@@ -53,7 +54,7 @@ export default function CharacterHeader({ character: char, onBack, onLongRest, o
       </div>
 
       <div className={s.actions}>
-        <button className={s.editBtn}>✏ Редагувати</button>
+        <button className={s.editBtn} onClick={onEdit}>✏ Редагувати</button>
         <button className={s.longRestBtn} onClick={onLongRest}>🌙 Довг. відпочинок</button>
         <button className={s.shortRestBtn} onClick={onShortRest}>🌿 Коротк.</button>
       </div>
