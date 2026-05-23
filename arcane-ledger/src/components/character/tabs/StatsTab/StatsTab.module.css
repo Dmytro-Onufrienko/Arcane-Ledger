@@ -1,0 +1,303 @@
+.root {
+  display: grid;
+  grid-template-columns: 200px 1fr 240px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── LEFT (Saving Throws) ─────────────────────────────── */
+.leftCol {
+  border-right: 1px solid var(--color-outline-dim);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: var(--space-4) 0;
+}
+
+.sectionHeader {
+  padding: 0 var(--space-4) var(--space-2);
+}
+
+.sectionTitle {
+  color: var(--color-on-surface-dim);
+}
+
+.ornamentDivider {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  gap: var(--space-2);
+}
+
+.ornamentLine {
+  flex: 1;
+  height: 1px;
+  background: var(--color-outline-dim);
+}
+
+.ornamentDiamond {
+  font-size: 8px;
+  color: var(--color-gold);
+  opacity: 0.6;
+  line-height: 1;
+}
+
+/* Saving throws */
+.savesList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) var(--space-4);
+}
+
+.saveRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 3px 0;
+}
+
+.saveProf {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-outline);
+  background: transparent;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.saveProfActive {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+}
+
+.saveBonus {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  min-width: 28px;
+  text-align: right;
+}
+
+.saveLabel {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-on-surface-dim);
+}
+
+/* ── CENTER (Hex Ring) ────────────────────────────────── */
+.centerCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--space-4);
+}
+
+.ringContainer {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  flex-shrink: 0;
+}
+
+.magicCircle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ability hexagons */
+.abilityHex {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+}
+
+.hexSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hexContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+
+.hexAbbr {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.hexScore {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.hexScore:hover { color: var(--color-gold); }
+
+.hexInput {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--color-gold);
+  width: 40px;
+  text-align: center;
+  line-height: 1;
+}
+
+.hexInput::-webkit-inner-spin-button,
+.hexInput::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.hexMod {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-on-surface-dim);
+  line-height: 1;
+}
+
+/* Center label */
+.ringCenter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+}
+
+.ringCenterLabel {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-gold);
+  opacity: 0.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ── RIGHT (Skills) ───────────────────────────────────── */
+.rightCol {
+  border-left: 1px solid var(--color-outline-dim);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: var(--space-4) 0;
+}
+
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: var(--space-2) var(--space-4);
+}
+
+.skillRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 3px 0;
+}
+
+.skillProfBtn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Proficiency dots */
+.profDotNone {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--color-outline);
+  background: transparent;
+}
+
+.profDotFull {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold);
+  background: var(--color-gold);
+}
+
+.profDotHalf {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold);
+  background: linear-gradient(90deg, var(--color-gold) 50%, transparent 50%);
+}
+
+.skillBonus {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  min-width: 26px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.skillName {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-on-surface-dim);
+  white-space: nowrap;
+}
+
+.skillLeader {
+  flex: 1;
+  border-bottom: 1px dotted var(--color-outline-dim);
+  margin: 0 2px;
+  min-width: 8px;
+  align-self: flex-end;
+  margin-bottom: 4px;
+}
+
+.skillAbility {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--color-outline);
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
