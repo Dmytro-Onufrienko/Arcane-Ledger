@@ -6,11 +6,12 @@ import EmptyState from '@/components/dashboard/EmptyState/EmptyState'
 import CharacterCard from '@/components/dashboard/CharacterCard/CharacterCard'
 import NewCharacterCard from '@/components/dashboard/NewCharacterCard/NewCharacterCard'
 import D20Icon from '@/components/ui/D20Icon'
+import CreateCharacterModal from '@/modals/CreateCharacter/CreateCharacterModal'
 import s from './Dashboard.module.css'
 
 export default function Dashboard() {
   const { characters, loading, fetchAll, deleteCharacter } = useCharacterStore()
-  const { openModal } = useUIStore()
+  const { openModal, isModalOpen } = useUIStore()
   const navigate = useNavigate()
 
   useEffect(() => { fetchAll() }, [fetchAll])
@@ -44,6 +45,8 @@ export default function Dashboard() {
           </div>
         )}
       </main>
+
+      {isModalOpen('createCharacter') && <CreateCharacterModal />}
     </div>
   )
 }

@@ -1,0 +1,129 @@
+.root {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  align-items: start;
+}
+
+/* Skills column */
+.skillCol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skillRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.profCheck {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-outline);
+  background: transparent;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.profChecked {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+}
+
+.skillName {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skillBonus { margin-left: auto; flex-shrink: 0; }
+
+/* Ability column */
+.abilityCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 200px;
+}
+
+.rollHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.rollHint {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-on-surface-dim);
+}
+
+.rollBtn {
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-outline-dim);
+  background: var(--color-surface-high);
+  transition: background var(--transition-fast);
+}
+
+.rollBtn:hover { background: var(--color-surface-highest); }
+
+.abilityRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-high);
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-md);
+}
+
+.abilityLabel {
+  width: 32px;
+  color: var(--color-on-surface-dim);
+  flex-shrink: 0;
+}
+
+.abilityScore {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--color-outline-dim);
+  cursor: text;
+  transition: border-color var(--transition-fast);
+}
+
+.abilityScore:hover { border-bottom-color: var(--color-gold); }
+
+.abilityInput {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--color-gold);
+  width: 48px;
+}
+
+.abilityInput::-webkit-outer-spin-button,
+.abilityInput::-webkit-inner-spin-button { -webkit-appearance: none; }

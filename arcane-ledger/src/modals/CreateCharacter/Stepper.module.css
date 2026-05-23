@@ -1,0 +1,46 @@
+.root {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-6) var(--space-8) var(--space-4);
+}
+
+.stepGroup {
+  display: flex;
+  align-items: center;
+}
+
+.stepWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.hex { display: block; }
+
+.connector {
+  width: 64px;
+  height: 2px;
+  background: var(--color-outline-dim);
+  margin: 0 4px;
+  margin-bottom: 22px;
+  transition: background var(--transition-normal);
+}
+
+.connectorDone {
+  background: var(--color-gold);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.label_active  { color: var(--color-secondary); }
+.label_done    { color: var(--color-gold); }
+.label_future  { color: var(--color-outline-dim); }
