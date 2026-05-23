@@ -1,0 +1,471 @@
+.root {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── LEFT: Attacks ───────────────────────────────────── */
+.attacksCol {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid var(--color-outline-dim);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-outline-dim);
+  flex-shrink: 0;
+}
+
+.colTitle {
+  color: var(--color-on-surface-dim);
+}
+
+.addBtn {
+  padding: 5px 14px;
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: transparent;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.addBtn:hover { background: var(--color-gold); color: var(--color-primary); }
+
+/* Empty state */
+.emptyState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--color-on-surface-dim);
+}
+
+.emptyIcon {
+  font-size: 48px;
+  opacity: 0.2;
+}
+
+.emptyText {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.emptyAddBtn {
+  padding: 8px 20px;
+  border: 1px dashed var(--color-outline);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-on-surface-dim);
+  background: transparent;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.emptyAddBtn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+/* Attack list */
+.attackList {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Attack card */
+.attackCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.cardName {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.cardTypeBadge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-gold);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+}
+
+.cardActions {
+  display: flex;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.editBtn, .deleteBtn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 12px;
+  color: var(--color-on-surface-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.editBtn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+.deleteBtn:hover { border-color: var(--color-error); color: var(--color-error); }
+
+.cardStats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.cardStat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardStatLabel {
+  color: var(--color-on-surface-dim);
+}
+
+.cardStatVal {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.cardDivider {
+  width: 1px;
+  height: 28px;
+  background: var(--color-outline-dim);
+}
+
+.dmgSep { color: var(--color-on-surface-dim); }
+
+.dmgType {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-on-surface-dim);
+}
+
+.cardNotes {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--color-on-surface-dim);
+  margin: 0;
+}
+
+.rollBtn {
+  align-self: flex-start;
+  padding: 6px 16px;
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  background: var(--color-surface-high);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.rollBtn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+/* ── RIGHT: Log + Dice ───────────────────────────────── */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  overflow: hidden;
+}
+
+.logEmpty {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--color-on-surface-dim);
+  opacity: 0.5;
+  margin: 0;
+}
+
+.logList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.logEntry {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-high);
+  border-radius: var(--radius-md);
+  border-left: 2px solid var(--color-gold);
+}
+
+.logName {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin-bottom: 4px;
+}
+
+.logRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-on-surface-dim);
+}
+
+.logVal {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.logParts {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-on-surface-dim);
+  margin-top: 2px;
+  opacity: 0.7;
+  word-break: break-word;
+}
+
+.dicePanelWrap {
+  border-top: 1px solid var(--color-outline-dim);
+  padding-top: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* ── Modal ────────────────────────────────────────────── */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 10, 5, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modalPanel {
+  width: 520px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-outline-dim);
+  flex-shrink: 0;
+}
+
+.modalTitle { color: var(--color-on-surface-dim); }
+
+.modalClose {
+  font-size: 16px;
+  color: var(--color-on-surface-dim);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.modalClose:hover { color: var(--color-on-surface); }
+
+.modalBody {
+  overflow-y: auto;
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fieldRow {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.fieldLabel { color: var(--color-on-surface-dim); }
+
+.fieldInput {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-on-surface);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--color-outline);
+  padding: 4px 0;
+  width: 100%;
+  transition: border-color var(--transition-fast);
+}
+.fieldInput:focus { border-color: var(--color-gold); outline: none; }
+.fieldInput::-webkit-inner-spin-button,
+.fieldInput::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.fieldSelect {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-on-surface);
+  background: var(--color-surface-high);
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-sm);
+  padding: 4px 6px;
+  transition: border-color var(--transition-fast);
+}
+.fieldSelect:focus { border-color: var(--color-gold); outline: none; }
+
+.typeGroup {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.typeBtn {
+  padding: 5px 12px;
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-on-surface-dim);
+  background: transparent;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+}
+.typeBtn:hover { border-color: var(--color-outline); color: var(--color-on-surface); }
+.typeBtnActive {
+  border-color: var(--color-gold);
+  color: var(--color-primary);
+  background: var(--color-gold);
+}
+
+.dmgRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.dmgPlus {
+  font-family: var(--font-mono);
+  color: var(--color-on-surface-dim);
+}
+
+.dmgRemove {
+  font-size: 11px;
+  color: var(--color-error);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.dmgRemove:hover { opacity: 1; }
+
+.addDmgBtn {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-on-surface-dim);
+  background: transparent;
+  border: 1px dashed var(--color-outline-dim);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.addDmgBtn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--color-outline-dim);
+  flex-shrink: 0;
+}
+
+.cancelBtn {
+  padding: 7px 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-on-surface-dim);
+  background: transparent;
+  border: 1px solid var(--color-outline-dim);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast);
+}
+.cancelBtn:hover { border-color: var(--color-outline); }
+
+.saveBtn {
+  padding: 7px 22px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-gold);
+  border: none;
+  border-radius: var(--radius-md);
+  transition: opacity var(--transition-fast);
+}
+.saveBtn:hover:not(:disabled) { opacity: 0.85; }
+.saveBtn:disabled { opacity: 0.4; cursor: default; }
