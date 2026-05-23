@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  gap: 2px;
+  padding: var(--space-2) var(--space-6);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-outline-dim);
+  flex-shrink: 0;
+}
+
+.tab {
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-on-surface);
+  background: transparent;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.tab:hover:not(.active) {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.active {
+  background: var(--color-gold);
+  color: var(--color-primary);
+}

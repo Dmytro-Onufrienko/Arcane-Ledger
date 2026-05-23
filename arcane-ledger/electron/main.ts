@@ -1,5 +1,9 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, protocol, net } from 'electron'
 import { join } from 'path'
+
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'portrait', privileges: { secure: true, standard: false, supportFetchAPI: true } }
+])
 import { copyFileSync, mkdirSync } from 'fs'
 import { initDB } from './db/connection'
 import * as characterQueries from './db/queries/characters'
@@ -32,6 +36,11 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
+  protocol.handle('portrait', (request) => {
+    const relativePath = request.url.slice('portrait://'.length)
+    return net.fetch(`file://${join(app.getPath('userData'), relativePath)}`)
+  })
+
   initDB()
   registerIPC()
   createWindow()

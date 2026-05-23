@@ -1,0 +1,3 @@
+export default function StatsTab() {
+  return <div style={{ padding: 24, fontFamily: 'var(--font-sans)', color: 'var(--color-on-surface-dim)' }}>— Незабаром —</div>
+}
