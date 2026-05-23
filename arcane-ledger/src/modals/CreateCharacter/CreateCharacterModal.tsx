@@ -5,6 +5,7 @@ import { CLASS_DEFINITIONS } from '@/constants/classes'
 import { calculateMulticlassSpellSlots } from '@/utils/calculations'
 import type { AbilityKey } from '@/types/character'
 import { INITIAL_DRAFT, type CharacterDraft } from './types'
+import D20Icon from '@/components/ui/D20Icon'
 import Stepper from './Stepper'
 import Step1Basics from './steps/Step1Basics'
 import Step2Classes from './steps/Step2Classes'
@@ -35,7 +36,6 @@ export default function CreateCharacterModal() {
   const handleCreate = async () => {
     setSaving(true)
     try {
-      // Auto-assign saving throw proficiencies from class definitions
       const savingThrows = Object.fromEntries(
         ABILITIES.map(ab => {
           const proficient = draft.classes.some(c => CLASS_DEFINITIONS[c.classId]?.savingThrows.includes(ab))
@@ -58,20 +58,16 @@ export default function CreateCharacterModal() {
           Object.entries(draft.skills).filter(([, v]) => v.proficient || v.expertise)
         ) as any,
         hp: { current: 10, max: 10, temp: 0 },
-        ac: 10,
-        speed: 9,
+        ac: 10, speed: 9,
         hitDice: { used: 0 },
         deathSaves: { successes: 0, failures: 0 },
-        inspiration: false,
-        attacksPerAction: 1,
+        inspiration: false, attacksPerAction: 1,
         spellcastingAbility: draft.classes
           .map(c => CLASS_DEFINITIONS[c.classId]?.spellcastingAbility)
           .find(Boolean) as AbilityKey | undefined,
-        spellSlots,
-        spells: [],
+        spellSlots, spells: [],
         currency: { pp: 0, gp: 0, ep: 0, sp: 0, cp: 0 },
-        inventory: [],
-        attacks: [],
+        inventory: [], attacks: [],
         traits: '', ideals: '', bonds: '', flaws: '', notes: '',
         conditions: [], exhaustionLevel: 0,
       })
@@ -92,8 +88,20 @@ export default function CreateCharacterModal() {
   return (
     <div className={s.backdrop} onClick={handleClose}>
       <div className={`parchment-bg ${s.panel}`} onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div className={s.header}>
+          <div className={s.titleRow}>
+            <D20Icon size={28} className={s.d20} />
+            <h2 className={s.title}>Створення персонажа</h2>
+          </div>
+          <div className="ornament-divider" />
+        </div>
+
+        {/* Step indicator */}
         <Stepper current={step} />
 
+        {/* Step content */}
         <div className={s.content}>
           {step === 0 && <Step1Basics draft={draft} onChange={patchDraft} />}
           {step === 1 && <Step2Classes draft={draft} onChange={patchDraft} />}
@@ -107,20 +115,12 @@ export default function CreateCharacterModal() {
             {step === 0 ? 'Скасувати' : '← Назад'}
           </button>
           {step < 3 ? (
-            <button
-              className={s.nextBtn}
-              onClick={() => setStep(s => s + 1)}
-              disabled={!canNext()}
-            >
+            <button className={s.nextBtn} onClick={() => setStep(s => s + 1)} disabled={!canNext()}>
               Далі →
             </button>
           ) : (
-            <button
-              className={s.nextBtn}
-              onClick={handleCreate}
-              disabled={!canNext() || saving}
-            >
-              {saving ? 'Зберігаємо...' : '+ Створити персонажа'}
+            <button className={s.nextBtn} onClick={handleCreate} disabled={!canNext() || saving}>
+              {saving ? 'Зберігаємо...' : 'Створити персонажа →'}
             </button>
           )}
         </div>

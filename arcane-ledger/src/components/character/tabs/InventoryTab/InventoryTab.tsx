@@ -219,8 +219,14 @@ export default function InventoryTab() {
         {/* Currency row */}
         <div className={s.currencyBar}>
           {COIN_LABELS.map(({ key, label, color }) => (
-            <div key={key} className={s.coinBlock}>
-              <span className={s.coinLabel} style={{ color }}>{label}</span>
+            <div
+              key={key}
+              className={s.coinBlock}
+              onClick={() => { if (editingCoin !== key) { setEditingCoin(key); setCoinDraft(String(char.currency[key])) } }}
+            >
+              <div className={s.coinCircle} style={{ color, borderColor: color }}>
+                {label}
+              </div>
               {editingCoin === key ? (
                 <input
                   className={s.coinInput}
@@ -229,19 +235,14 @@ export default function InventoryTab() {
                   autoFocus
                   onChange={e => setCoinDraft(e.target.value)}
                   onBlur={() => commitCoin(key)}
+                  onClick={e => e.stopPropagation()}
                   onKeyDown={e => {
                     if (e.key === 'Enter') commitCoin(key)
                     if (e.key === 'Escape') setEditingCoin(null)
                   }}
                 />
               ) : (
-                <button
-                  className={s.coinVal}
-                  onClick={() => { setEditingCoin(key); setCoinDraft(String(char.currency[key])) }}
-                  title="Натисніть для редагування"
-                >
-                  {char.currency[key]}
-                </button>
+                <span className={s.coinVal}>{char.currency[key]}</span>
               )}
             </div>
           ))}

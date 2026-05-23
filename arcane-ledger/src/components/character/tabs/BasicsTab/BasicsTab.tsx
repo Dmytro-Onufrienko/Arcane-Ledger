@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import type { Character } from '@/types/character'
+import type { AbilityKey } from '@/types/character'
 import { CLASS_DEFINITIONS } from '@/constants/classes'
+import { SKILLS } from '@/constants/skills'
 import {
-  getModifier, formatMod, getTotalLevel, getProficiencyBonus, getPassivePerception
+  getModifier, formatMod, getTotalLevel, getProficiencyBonus,
+  getPassivePerception, getSavingThrowBonus, getSkillBonus,
 } from '@/utils/calculations'
 import HexStat from '@/components/character/shared/HexStat/HexStat'
-import DicePanel from '@/components/character/shared/DicePanel/DicePanel'
 import s from './BasicsTab.module.css'
 
 const ALIGNMENT_LABELS: Record<string, string> = {
@@ -13,6 +15,12 @@ const ALIGNMENT_LABELS: Record<string, string> = {
   ln: 'Законно-Нейтральний', tn: 'Істинно Нейтральний', cn: 'Хаотично-Нейтральний',
   le: 'Законно-Злий', ne: 'Нейтрально-Злий', ce: 'Хаотично-Злий',
 }
+
+const SAVE_ABBRS: Record<AbilityKey, string> = {
+  str: 'Сила', dex: 'Спритність', con: 'Статура',
+  int: 'Інтелект', wis: 'Мудрість', cha: 'Харизма',
+}
+const ABILITY_KEYS: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
 interface Props {
   character: Character
@@ -29,11 +37,9 @@ export default function BasicsTab({ character: char, onUpdate }: Props) {
   const passivePerception = getPassivePerception(char)
   const hpPercent = char.hp.max > 0 ? Math.max(0, char.hp.current / char.hp.max) : 0
   const hpColor = hpPercent > 0.5
-    ? 'var(--color-success)'
-    : hpPercent > 0.25 ? 'var(--color-warning)' : 'var(--color-error)'
+    ? '#2d8a2d' : hpPercent > 0.25 ? '#c8a000' : '#ba1a1a'
   const isDying = char.hp.current <= 0
 
-  // Hit dice from classes
   const hitDiceList = char.classes.flatMap(cls =>
     Array.from({ length: cls.level }, (_, i) => ({
       key: `${cls.classId}-${i}`,
@@ -50,8 +56,7 @@ export default function BasicsTab({ character: char, onUpdate }: Props) {
       ? Math.max(0, char.hp.current - delta)
       : Math.min(char.hp.max + char.hp.temp, char.hp.current + delta)
     await onUpdate({ hp: { ...char.hp, current: newCurrent } })
-    setHpEdit(null)
-    setHpDelta('')
+    setHpEdit(null); setHpDelta('')
   }
 
   const useHitDie = async () => {
@@ -90,7 +95,7 @@ export default function BasicsTab({ character: char, onUpdate }: Props) {
 
   return (
     <div className={s.root}>
-      {/* LEFT: portrait + meta + classes */}
+      {/* ── LEFT ── portrait + meta + classes */}
       <aside className={s.left}>
         <div className={`portrait-frame ${s.portrait}`} onClick={handlePortrait} title="Змінити портрет">
           {char.imageUri
@@ -107,9 +112,9 @@ export default function BasicsTab({ character: char, onUpdate }: Props) {
 
         <div className={s.metaList}>
           {[
-            { label: 'Раса', value: char.race || '—' },
-            { label: 'Світогляд', value: char.alignment ? (ALIGNMENT_LABELS[char.alignment] ?? char.alignment) : '—' },
-            { label: 'Передісторія', value: char.background || '—' },
+            { label: 'Раса',          value: char.race || '—' },
+            { label: 'Світогляд',     value: char.alignment ? (ALIGNMENT_LABELS[char.alignment] ?? char.alignment) : '—' },
+            { label: 'Передісторія',  value: char.background || '—' },
           ].map(({ label, value }) => (
             <div key={label} className={s.metaItem}>
               <span className={`label-caps ${s.metaLabel}`}>{label}</span>
@@ -128,58 +133,51 @@ export default function BasicsTab({ character: char, onUpdate }: Props) {
                   {def?.nameUk}
                 </span>
                 <span className={s.classLevel}>{cls.level}</span>
-                <button
-                  className={s.levelUpBtn}
-                  onClick={() => levelUp(cls.classId)}
-                  disabled={totalLevel >= 20}
-                  title="Level up"
-                >+</button>
+                <button className={s.levelUpBtn} onClick={() => levelUp(cls.classId)}
+                  disabled={totalLevel >= 20} title="Level up">+</button>
               </div>
             )
           })}
         </div>
       </aside>
 
-      {/* CENTER: HP, AC, stats, hit dice, inspiration, death saves */}
+      {/* ── CENTER ── HP, AC, stats, hit dice, inspiration, death saves */}
       <main className={s.center}>
-        {/* HP block */}
+        {/* HP */}
         <section className={s.hpBlock}>
-          <span className={`label-caps ${s.blockLabel}`}>Хіт-пойнти</span>
-          <div className={s.hpNumbers}>
-            <span className={s.hpCurrent} style={{ color: hpColor }}>{char.hp.current}</span>
-            <span className={s.hpSep}> / </span>
-            <span className={s.hpMax}>{char.hp.max}</span>
-            {char.hp.temp > 0 && <span className={s.hpTemp}>(+{char.hp.temp})</span>}
+          <div className={s.hpOval}>
+            <div className={s.hpNumbers}>
+              <span className={s.hpCurrent} style={{ color: hpColor }}>{char.hp.current}</span>
+              <span className={s.hpSep}>/</span>
+              <span className={s.hpMax}>{char.hp.max}</span>
+              {char.hp.temp > 0 && <span className={s.hpTemp}>(+{char.hp.temp})</span>}
+            </div>
           </div>
+          <span className={s.hpLabel}>Хіт-пойнти</span>
           <div className={s.hpTrack}>
             <div className={s.hpFill} style={{ width: `${hpPercent * 100}%`, backgroundColor: hpColor }} />
-            <span className={s.hpSword}>⚔</span>
           </div>
           {hpEdit ? (
             <div className={s.hpEditRow}>
-              <input
-                className={s.hpInput}
-                type="number" min={1}
+              <input className={s.hpInput} type="number" min={1}
                 placeholder={hpEdit === 'damage' ? 'Шкода...' : 'Зцілення...'}
-                value={hpDelta}
-                autoFocus
+                value={hpDelta} autoFocus
                 onChange={e => setHpDelta(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && applyHpDelta()}
-              />
+                onKeyDown={e => e.key === 'Enter' && applyHpDelta()} />
               <button className={s.hpApplyBtn} onClick={applyHpDelta}>OK</button>
               <button className={s.hpCancelBtn} onClick={() => { setHpEdit(null); setHpDelta('') }}>✕</button>
             </div>
           ) : (
             <div className={s.hpBtns}>
-              <button className={s.hpDmgBtn} onClick={() => setHpEdit('damage')}>− Шкода</button>
+              <button className={s.hpDmgBtn}  onClick={() => setHpEdit('damage')}>− Шкода</button>
               <button className={s.hpHealBtn} onClick={() => setHpEdit('heal')}>+ Зцілення</button>
             </div>
           )}
         </section>
 
-        {/* AC + Initiative row */}
+        {/* AC + Initiative */}
         <div className={s.acRow}>
-          <HexStat value={char.ac} label="Клас броні" size={120} dark />
+          <HexStat value={char.ac} label="Клас броні" size={110} dark />
           <div className={s.initiativeBlock}>
             <span className={s.initiativeVal}>{formatMod(initiative)}</span>
             <span className={`label-caps ${s.initiativeLabel}`}>Ініціатива</span>
@@ -189,9 +187,9 @@ export default function BasicsTab({ character: char, onUpdate }: Props) {
         {/* Stats row */}
         <div className={s.statsRow}>
           {[
-            { label: 'Швидкість', value: `${char.speed} м` },
-            { label: 'Пас. уважність', value: passivePerception },
-            { label: 'Бон. майстерн.', value: formatMod(profBonus) },
+            { label: 'Швидкість',    value: `${char.speed} м` },
+            { label: 'Пас. уважн.',  value: passivePerception },
+            { label: 'Бон. майстер.',value: formatMod(profBonus) },
           ].map(({ label, value }) => (
             <div key={label} className={s.statItem}>
               <span className={`label-caps ${s.statLabel}`}>{label}</span>
@@ -224,37 +222,70 @@ export default function BasicsTab({ character: char, onUpdate }: Props) {
           <span className={s.inspirationLabel}>Натхнення</span>
         </div>
 
-        {/* Death saves (only when dying) */}
+        {/* Death saves */}
         {isDying && (
           <section className={s.deathSaves}>
             <span className={`label-caps ${s.blockLabel}`}>Кидки смерті</span>
             <div className={s.savesRow}>
               <span className={s.savesTitle}>Успіхи</span>
               {[0, 1, 2].map(i => (
-                <button
-                  key={i}
+                <button key={i}
                   className={`${s.saveBox} ${s.saveSuccess} ${i < char.deathSaves.successes ? s.saveChecked : ''}`}
-                  onClick={() => onUpdate({ deathSaves: { ...char.deathSaves, successes: i < char.deathSaves.successes ? i : i + 1 } })}
-                />
+                  onClick={() => onUpdate({ deathSaves: { ...char.deathSaves, successes: i < char.deathSaves.successes ? i : i + 1 } })} />
               ))}
             </div>
             <div className={s.savesRow}>
               <span className={s.savesTitle}>Провали</span>
               {[0, 1, 2].map(i => (
-                <button
-                  key={i}
+                <button key={i}
                   className={`${s.saveBox} ${s.saveFailure} ${i < char.deathSaves.failures ? s.saveChecked : ''}`}
-                  onClick={() => onUpdate({ deathSaves: { ...char.deathSaves, failures: i < char.deathSaves.failures ? i : i + 1 } })}
-                />
+                  onClick={() => onUpdate({ deathSaves: { ...char.deathSaves, failures: i < char.deathSaves.failures ? i : i + 1 } })} />
               ))}
             </div>
           </section>
         )}
       </main>
 
-      {/* RIGHT: dice panel */}
+      {/* ── RIGHT ── Saving throws + Skills */}
       <aside className={s.right}>
-        <DicePanel />
+        <div className={s.rightSection}>
+          <span className={`label-caps ${s.rightSectionLabel}`}>Кидки рятунку</span>
+          <div className={s.savesList}>
+            {ABILITY_KEYS.map(key => {
+              const prof = char.savingThrows[key]
+              const bonus = getSavingThrowBonus(char, key)
+              const isProficient = prof?.proficient
+              return (
+                <div key={key} className={s.saveRow}>
+                  <span className={`${s.profDot} ${isProficient ? s.profDotFull : s.profDotNone}`} />
+                  <span className={s.saveName}>{SAVE_ABBRS[key]}</span>
+                  <span className={s.saveLeader} />
+                  <span className={s.saveMod}>{formatMod(bonus)}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className={s.rightSection}>
+          <span className={`label-caps ${s.rightSectionLabel}`}>Вміння</span>
+          <div className={s.skillsList}>
+            {SKILLS.map(skill => {
+              const prof = char.skills[skill.key]
+              const bonus = getSkillBonus(char, skill.key)
+              const isProf = prof?.proficient
+              const isExpert = prof?.expertise
+              return (
+                <div key={skill.key} className={s.skillRow}>
+                  <span className={`${s.profDot} ${isExpert ? s.profDotExpert : isProf ? s.profDotFull : s.profDotNone}`} />
+                  <span className={s.skillName}>{skill.nameUk}</span>
+                  <span className={s.skillLeader} />
+                  <span className={s.skillMod}>{formatMod(bonus)}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </aside>
     </div>
   )

@@ -4,8 +4,10 @@ interface Props { onClick: () => void }
 
 export default function NewCharacterCard({ onClick }: Props) {
   return (
-    <button className={`dashed-frame ${s.card}`} onClick={onClick} aria-label="Новий персонаж">
-      <span className={s.plus}>+</span>
+    <button className={s.card} onClick={onClick} aria-label="Новий персонаж">
+      <div className={s.plusWrap}>
+        <span className={s.plus}>+</span>
+      </div>
       <span className={s.label}>Новий персонаж</span>
     </button>
   )

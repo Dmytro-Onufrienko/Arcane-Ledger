@@ -158,11 +158,17 @@ export default function StatsTab() {
                 style={{ left: cx - 44, top: cy - 44 }}
               >
                 <svg viewBox="0 0 88 88" className={s.hexSvg}>
+                  <defs>
+                    <linearGradient id={`hexGrad-${key}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#fdf6e3" />
+                      <stop offset="100%" stopColor="#f0e6c8" />
+                    </linearGradient>
+                  </defs>
                   <polygon
                     points="44,4 80,24 80,64 44,84 8,64 8,24"
-                    fill="var(--color-surface-dark)"
+                    fill={`url(#hexGrad-${key})`}
                     stroke="var(--color-gold)"
-                    strokeWidth="1.5"
+                    strokeWidth="2"
                   />
                 </svg>
                 <div className={s.hexContent}>

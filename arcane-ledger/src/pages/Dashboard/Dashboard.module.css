@@ -6,19 +6,19 @@
   overflow: hidden;
 }
 
-/* Header — draggable region for frameless window */
+/* ── Header ── */
 .header {
   -webkit-app-region: drag;
   flex-shrink: 0;
-  padding: var(--space-4) var(--space-6) var(--space-3);
-  padding-top: 20px;
+  padding: 0 var(--space-6) 0;
+  padding-top: 14px; /* traffic lights */
 }
 
 .titleRow {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding-left: 80px; /* leave space for macOS traffic lights */
+  padding-left: 80px;
   padding-bottom: var(--space-3);
   -webkit-app-region: drag;
 }
@@ -26,17 +26,19 @@
 .d20 {
   color: var(--color-gold);
   flex-shrink: 0;
+  filter: drop-shadow(0 1px 4px rgba(180,130,20,0.5));
 }
 
 .title {
   font-family: var(--font-serif), serif;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--color-on-surface);
   line-height: 1;
+  letter-spacing: 0.01em;
 }
 
-/* Main scrollable area */
+/* ── Main ── */
 .main {
   flex: 1;
   overflow-y: auto;
@@ -44,11 +46,11 @@
   flex-direction: column;
 }
 
-/* Character grid */
+/* ── Grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-4);
-  padding: var(--space-6);
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6) var(--space-8);
   align-content: start;
 }

@@ -45,45 +45,52 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .sectionTitle { color: var(--color-on-surface-dim); }
 
 .slotsGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: var(--space-2);
 }
 
 .slotBlock {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 6px;
 }
 
 .slotLabel {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--color-on-surface-dim);
 }
 
 .slotRow {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
+  gap: 4px;
 }
 
 .slotCoins {
   display: flex;
-  gap: 4px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-content: center;
+  max-width: 52px;
 }
 
 .slotCoin {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   border: 2px solid var(--color-gold);
   background: var(--color-gold);
@@ -93,14 +100,48 @@
 
 .slotCoinUsed {
   background: transparent;
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 .slotCount {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--color-on-surface-dim);
+}
+
+/* Large level circle variant for the slot level indicator */
+.slotLevelCircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #3a2d14 0%, #231a08 100%);
+  border: 2px solid rgba(212,175,55,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(20,16,8,0.3);
+}
+.slotLevelCircle:hover { border-color: var(--color-gold); box-shadow: 0 0 12px rgba(212,175,55,0.2); }
+.slotLevelCircleEmpty { opacity: 0.4; }
+
+.slotLevelNum {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.slotLevelRemain {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(212,175,55,0.6);
+  line-height: 1;
 }
 
 /* ── Toolbar ──────────────────────────────────────────── */

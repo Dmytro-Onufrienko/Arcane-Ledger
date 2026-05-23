@@ -7,12 +7,12 @@ export default function EmptyState({ onCreate }: Props) {
   return (
     <div className={s.root}>
       <div className={s.iconWrap}>
-        <D20Icon size={80} className={s.icon} />
+        <D20Icon size={96} medallion className={s.icon} />
       </div>
       <p className={s.title}>Ще немає персонажів</p>
-      <p className={s.subtitle}>Створи свого першого героя — це швидко.</p>
+      <p className={s.subtitle}>Створи свого першого героя — це надзвичайно.</p>
       <button className={s.createBtn} onClick={onCreate}>
-        + Створити персонажа
+        Створити персонажа
       </button>
     </div>
   )

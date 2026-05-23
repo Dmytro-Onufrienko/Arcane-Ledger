@@ -11,6 +11,10 @@ const ATTACK_TYPE_LABELS: Record<AttackType, string> = {
   melee: 'Ближній', ranged: 'Дальній', spell: 'Чарівний',
 }
 
+const ATTACK_ICONS: Record<AttackType, string> = {
+  melee: '⚔', ranged: '🏹', spell: '✨',
+}
+
 const DIE_OPTIONS: DieType[] = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20']
 const DAMAGE_TYPES = [
   'Рубаючий', 'Колючий', 'Дробячий', 'Вогонь', 'Крижаний',
@@ -34,9 +38,7 @@ interface AttackModalProps {
 }
 
 function AttackModal({ initial, onSave, onClose }: AttackModalProps) {
-  const [draft, setDraft] = useState<Omit<Attack, 'id'>>(
-    initial ?? EMPTY_DRAFT()
-  )
+  const [draft, setDraft] = useState<Omit<Attack, 'id'>>(initial ?? EMPTY_DRAFT())
 
   const setField = <K extends keyof typeof draft>(k: K, v: (typeof draft)[K]) =>
     setDraft(d => ({ ...d, [k]: v }))
@@ -63,10 +65,10 @@ function AttackModal({ initial, onSave, onClose }: AttackModalProps) {
 
   return (
     <div className={s.modalBackdrop} onClick={onClose}>
-      <div className={`gold-frame ${s.modalPanel}`} onClick={e => e.stopPropagation()}>
+      <div className={s.modalPanel} onClick={e => e.stopPropagation()}>
         <div className={s.modalHeader}>
-          <span className={`label-caps ${s.modalTitle}`}>
-            {initial ? 'Редагувати атаку' : 'Нова атака'}
+          <span className={s.modalTitle}>
+            {initial ? 'Редагувати атаку' : 'Додати нову атаку'}
           </span>
           <button className={s.modalClose} onClick={onClose}>✕</button>
         </div>
@@ -74,7 +76,7 @@ function AttackModal({ initial, onSave, onClose }: AttackModalProps) {
         <div className={s.modalBody}>
           {/* Name */}
           <div className={s.fieldGroup}>
-            <label className={`label-caps ${s.fieldLabel}`}>Назва</label>
+            <label className={s.fieldLabel}>Назва зброї</label>
             <input
               className={s.fieldInput}
               value={draft.name}
@@ -83,34 +85,20 @@ function AttackModal({ initial, onSave, onClose }: AttackModalProps) {
             />
           </div>
 
-          {/* Type + Bonus */}
-          <div className={s.fieldRow}>
-            <div className={s.fieldGroup} style={{ flex: 1 }}>
-              <label className={`label-caps ${s.fieldLabel}`}>Тип</label>
-              <div className={s.typeGroup}>
-                {(['melee', 'ranged', 'spell'] as AttackType[]).map(t => (
-                  <button
-                    key={t}
-                    className={`${s.typeBtn} ${draft.attackType === t ? s.typeBtnActive : ''}`}
-                    onClick={() => setField('attackType', t)}
-                  >{ATTACK_TYPE_LABELS[t]}</button>
-                ))}
-              </div>
-            </div>
-            <div className={s.fieldGroup} style={{ width: 100 }}>
-              <label className={`label-caps ${s.fieldLabel}`}>Бонус атаки</label>
-              <input
-                className={s.fieldInput}
-                type="number"
-                value={draft.attackBonus}
-                onChange={e => setField('attackBonus', parseInt(e.target.value) || 0)}
-              />
-            </div>
+          {/* Bonus */}
+          <div className={s.fieldGroup} style={{ width: 140 }}>
+            <label className={s.fieldLabel}>Бонус до атаки</label>
+            <input
+              className={s.fieldInput}
+              type="number"
+              value={draft.attackBonus}
+              onChange={e => setField('attackBonus', parseInt(e.target.value) || 0)}
+            />
           </div>
 
           {/* Damage formula */}
           <div className={s.fieldGroup}>
-            <label className={`label-caps ${s.fieldLabel}`}>Формула шкоди</label>
+            <label className={s.fieldLabel}>Формула шкоди</label>
             {draft.damageFormula.map((comp, i) => (
               <div key={i} className={s.dmgRow}>
                 <select
@@ -144,26 +132,29 @@ function AttackModal({ initial, onSave, onClose }: AttackModalProps) {
             <button className={s.addDmgBtn} onClick={addDmgComp}>+ Додати компонент</button>
           </div>
 
-          {/* Range + Notes */}
-          <div className={s.fieldRow}>
-            <div className={s.fieldGroup} style={{ width: 120 }}>
-              <label className={`label-caps ${s.fieldLabel}`}>Дальність</label>
-              <input
-                className={s.fieldInput}
-                value={draft.range ?? ''}
-                placeholder="1.5 м"
-                onChange={e => setField('range', e.target.value)}
-              />
+          {/* Attack type */}
+          <div className={s.fieldGroup}>
+            <label className={s.fieldLabel}>Тип атаки</label>
+            <div className={s.typeGroup}>
+              {(['melee', 'ranged', 'spell'] as AttackType[]).map(t => (
+                <button
+                  key={t}
+                  className={`${s.typeBtn} ${draft.attackType === t ? s.typeBtnActive : ''}`}
+                  onClick={() => setField('attackType', t)}
+                >{ATTACK_TYPE_LABELS[t]}</button>
+              ))}
             </div>
-            <div className={s.fieldGroup} style={{ flex: 1 }}>
-              <label className={`label-caps ${s.fieldLabel}`}>Нотатки</label>
-              <input
-                className={s.fieldInput}
-                value={draft.notes ?? ''}
-                placeholder="Фінт, прицільний постріл..."
-                onChange={e => setField('notes', e.target.value)}
-              />
-            </div>
+          </div>
+
+          {/* Range */}
+          <div className={s.fieldGroup} style={{ width: 160 }}>
+            <label className={s.fieldLabel}>Дистанція</label>
+            <input
+              className={s.fieldInput}
+              value={draft.range ?? ''}
+              placeholder="1.5 м"
+              onChange={e => setField('range', e.target.value)}
+            />
           </div>
         </div>
 
@@ -174,7 +165,7 @@ function AttackModal({ initial, onSave, onClose }: AttackModalProps) {
             disabled={!canSave}
             onClick={() => onSave({ id: initial?.id ?? randomUUID(), ...draft })}
           >
-            {initial ? 'Зберегти' : 'Додати'}
+            {initial ? '← Зберегти зміни' : '← Додати атаку'}
           </button>
         </div>
       </div>
@@ -232,11 +223,15 @@ export default function AttacksTab() {
 
   return (
     <div className={s.root}>
-      {/* LEFT: attack cards */}
+      {/* LEFT: attack list */}
       <main className={s.attacksCol}>
-        <div className={s.toolbar}>
-          <span className={`label-caps ${s.colTitle}`}>Атаки</span>
-          <button className={s.addBtn} onClick={() => setModal('new')}>+ Додати</button>
+        {/* Column headers */}
+        <div className={s.tableHead}>
+          <span />
+          <span className={s.thLabel}>Атака · {char.attacks.length} шт.</span>
+          <span className={s.thLabel}>Шкода</span>
+          <span className={s.thLabel}>Тип</span>
+          <button className={s.thAddBtn} onClick={() => setModal('new')}>+ Додати</button>
         </div>
 
         {char.attacks.length === 0 ? (
@@ -248,70 +243,69 @@ export default function AttacksTab() {
             </button>
           </div>
         ) : (
-          <div className={s.attackList}>
-            {char.attacks.map(attack => (
-              <div key={attack.id} className={`gold-frame ${s.attackCard}`}>
-                <div className={s.cardTop}>
-                  <div className={s.cardMeta}>
-                    <span className={s.cardName}>{attack.name}</span>
-                    <span className={s.cardTypeBadge}>{ATTACK_TYPE_LABELS[attack.attackType]}</span>
+          <>
+            <div className={s.attackList}>
+              {char.attacks.map(attack => (
+                <div key={attack.id} className={s.attackRow}>
+                  {/* Icon */}
+                  <div className={s.weaponIcon}>
+                    {ATTACK_ICONS[attack.attackType]}
                   </div>
-                  <div className={s.cardActions}>
+
+                  {/* Name + notes */}
+                  <div className={s.attackInfo}>
+                    <span className={s.attackName}>{attack.name}</span>
+                    {(attack.notes || attack.range) && (
+                      <span className={s.attackNotes}>
+                        {[attack.range, attack.notes].filter(Boolean).join(' · ')}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Dice formula */}
+                  <div className={s.formulaRow}>
+                    <span className={s.bonusBadge}>{formatMod(attack.attackBonus)}</span>
+                    {attack.damageFormula.map((comp, i) => (
+                      <span key={i} className={s.diceBadge}>
+                        {comp.dice}{(comp.bonus ?? 0) !== 0 ? formatMod(comp.bonus!) : ''}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Type */}
+                  <span className={s.typeBadge}>{ATTACK_TYPE_LABELS[attack.attackType]}</span>
+
+                  {/* Actions */}
+                  <div className={s.rowActions}>
+                    <button className={s.rollBtn} onClick={() => rollAttack(attack)}>
+                      Кидок
+                    </button>
                     <button className={s.editBtn} onClick={() => setModal(attack)} title="Редагувати">✏</button>
                     <button className={s.deleteBtn} onClick={() => deleteAttack(attack.id)} title="Видалити">✕</button>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                <div className={s.cardStats}>
-                  <div className={s.cardStat}>
-                    <span className={`label-caps ${s.cardStatLabel}`}>Атака</span>
-                    <span className={s.cardStatVal}>{formatMod(attack.attackBonus)}</span>
-                  </div>
-                  <div className={s.cardDivider} />
-                  <div className={s.cardStat}>
-                    <span className={`label-caps ${s.cardStatLabel}`}>Шкода</span>
-                    <span className={s.cardStatVal}>
-                      {attack.damageFormula.map((c, i) => (
-                        <span key={i}>
-                          {i > 0 && <span className={s.dmgSep}> + </span>}
-                          {c.dice}{(c.bonus ?? 0) !== 0 ? formatMod(c.bonus!) : ''}
-                          <span className={s.dmgType}> {c.type}</span>
-                        </span>
-                      ))}
-                    </span>
-                  </div>
-                  {attack.range && (
-                    <>
-                      <div className={s.cardDivider} />
-                      <div className={s.cardStat}>
-                        <span className={`label-caps ${s.cardStatLabel}`}>Дальн.</span>
-                        <span className={s.cardStatVal}>{attack.range}</span>
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {attack.notes && (
-                  <p className={s.cardNotes}>{attack.notes}</p>
-                )}
-
-                <button className={s.rollBtn} onClick={() => rollAttack(attack)}>
-                  ⚄ Кинути кубики
-                </button>
-              </div>
-            ))}
-          </div>
+            <div className={s.bottomAddBtn}>
+              <button className={s.bottomAddBtnInner} onClick={() => setModal('new')}>
+                + Додати атаку
+              </button>
+            </div>
+          </>
         )}
       </main>
 
-      {/* RIGHT: roll log + dice panel */}
+      {/* RIGHT: roll log */}
       <aside className={s.rightCol}>
-        <span className={`label-caps ${s.colTitle}`}>Журнал кидків</span>
-        {log.length === 0 ? (
-          <p className={s.logEmpty}>Натисніть «Кинути кубики»</p>
-        ) : (
-          <div className={s.logList}>
-            {log.map(entry => (
+        <div className={s.rightHeader}>
+          <span className={s.rightTitle}>Журнал кидків</span>
+        </div>
+        <div className={s.logBody}>
+          {log.length === 0 ? (
+            <p className={s.logEmpty}>Натисніть «Кидок»</p>
+          ) : (
+            log.map(entry => (
               <div key={entry.id} className={s.logEntry}>
                 <div className={s.logName}>{entry.name}</div>
                 <div className={s.logRow}>
@@ -324,9 +318,9 @@ export default function AttacksTab() {
                 </div>
                 <div className={s.logParts}>{entry.dmgParts.join(' + ')}</div>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          )}
+        </div>
         <div className={s.dicePanelWrap}>
           <DicePanel />
         </div>

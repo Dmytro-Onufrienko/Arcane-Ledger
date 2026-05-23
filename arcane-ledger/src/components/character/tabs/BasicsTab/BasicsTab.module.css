@@ -1,6 +1,6 @@
 .root {
   display: grid;
-  grid-template-columns: 220px 1fr 200px;
+  grid-template-columns: 200px 1fr 230px;
   height: 100%;
   overflow: hidden;
 }
@@ -152,6 +152,18 @@
   gap: var(--space-2);
 }
 
+.hpOval {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(180deg, #2a2010 0%, #1a1408 100%);
+  border: 2px solid rgba(212,175,55,0.3);
+  border-radius: 40px;
+  padding: var(--space-3) var(--space-6);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+}
+
 .hpNumbers {
   display: flex;
   align-items: baseline;
@@ -160,15 +172,21 @@
 
 .hpCurrent {
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 700;
   line-height: 1;
 }
 
-.hpSep, .hpMax {
+.hpSep {
   font-family: var(--font-serif);
   font-size: 24px;
-  color: var(--color-on-surface-dim);
+  color: rgba(255,249,238,0.4);
+}
+
+.hpMax {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: rgba(255,249,238,0.6);
 }
 
 .hpTemp {
@@ -178,12 +196,21 @@
   margin-left: var(--space-1);
 }
 
+.hpLabel {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.5);
+  text-align: center;
+}
+
 .hpTrack {
-  position: relative;
-  height: 8px;
+  height: 6px;
   background: var(--color-surface-highest);
   border-radius: var(--radius-full);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .hpFill {
@@ -192,22 +219,14 @@
   transition: width var(--transition-normal), background-color var(--transition-normal);
 }
 
-.hpSword {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 14px;
-  line-height: 1;
-}
-
 .hpBtns {
   display: flex;
   gap: var(--space-2);
 }
 
 .hpDmgBtn, .hpHealBtn {
-  padding: 6px 16px;
+  flex: 1;
+  padding: 7px 10px;
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -423,8 +442,89 @@
 .saveSuccess { color: var(--color-success); }
 .saveFailure { color: var(--color-error); }
 
-/* RIGHT */
+/* ── RIGHT: Saving throws + Skills ── */
 .right {
   border-left: 1px solid var(--color-outline-dim);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3) var(--space-3);
+  border-bottom: 1px solid var(--color-outline-dim);
+}
+
+.rightSectionLabel {
+  color: var(--color-on-surface-dim);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.savesList, .skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.saveRow, .skillRow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 18px;
+}
+
+.profDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-outline);
+  flex-shrink: 0;
+  background: transparent;
+  display: inline-block;
+}
+
+.profDotFull {
+  background: var(--color-on-surface);
+  border-color: var(--color-on-surface);
+}
+
+.profDotExpert {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.profDotNone {
+  background: transparent;
+  border-color: var(--color-outline-dim);
+}
+
+.saveName, .skillName {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--color-on-surface);
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+
+.saveLeader, .skillLeader {
+  flex: 1;
+  border-bottom: 1px dotted var(--color-outline-dim);
+  margin-bottom: 2px;
+  min-width: 4px;
+}
+
+.saveMod, .skillMod {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  min-width: 26px;
+  text-align: right;
+  flex-shrink: 0;
 }

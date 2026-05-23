@@ -1,55 +1,86 @@
+/* ── Card shell ── */
 .card {
-  display: flex;
-  flex-direction: row;
-  gap: 0;
-  min-height: 220px;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  min-height: 190px;
   cursor: pointer;
   position: relative;
-  overflow: visible;
   border-radius: var(--radius-md);
+  border: 2px solid rgba(212, 175, 55, 0.65);
+  background: linear-gradient(160deg, #f8f0da 0%, #ede4cc 100%);
+  box-shadow:
+    0 3px 12px rgba(31, 28, 15, 0.22),
+    inset 0 0 0 1px rgba(212, 175, 55, 0.12);
+  overflow: hidden;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
-/* Portrait */
+.card:hover {
+  border-color: var(--color-gold);
+  box-shadow:
+    0 6px 24px rgba(31, 28, 15, 0.28),
+    inset 0 0 24px rgba(212, 175, 55, 0.07);
+}
+
+/* ── Portrait strip ── */
 .portrait {
-  width: 140px;
-  min-width: 140px;
-  height: 100%;
-  min-height: 220px;
-  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  color: var(--color-outline);
+  background: linear-gradient(180deg, #2a2010 0%, #1a1408 100%);
+  border-right: 2px solid rgba(212, 175, 55, 0.5);
+  color: rgba(212, 175, 55, 0.35);
 }
 
 .portraitImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .portraitPlaceholder {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
+  width: 100%;
+  height: 100%;
 }
 
 .portraitPlaceholder svg {
-  width: 60px;
-  height: 80px;
+  width: 52px;
+  height: 68px;
 }
 
-/* Content */
+/* Ornate corner accents on the portrait */
+.portrait::before,
+.portrait::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(212, 175, 55, 0.6);
+  border-style: solid;
+  pointer-events: none;
+}
+.portrait::before {
+  top: 4px; left: 4px;
+  border-width: 1.5px 0 0 1.5px;
+}
+.portrait::after {
+  bottom: 4px; right: 4px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+/* ── Content area ── */
 .content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  padding: var(--space-4);
-  gap: var(--space-2);
+  padding: 10px 12px 10px 14px;
+  gap: 4px;
   min-width: 0;
 }
 
@@ -62,31 +93,92 @@
 
 .name {
   font-family: var(--font-serif), serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--color-on-surface);
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* ── Class badges ── */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ── Race / alignment ── */
 .meta {
   font-family: var(--font-sans), sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   color: var(--color-on-surface-dim);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 2px;
 }
 
-/* Context menu */
+/* ── Stats footer ── */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(119, 119, 113, 0.3);
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.stat + .stat {
+  border-left: 1px solid rgba(119, 119, 113, 0.25);
+}
+
+.statVal {
+  font-family: var(--font-mono), monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1;
+}
+
+.statLbl {
+  font-family: var(--font-mono), monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-dim);
+}
+
+/* ── Menu ── */
 .menuWrap {
   position: relative;
   flex-shrink: 0;
 }
 
 .menuBtn {
-  font-family: var(--font-mono), monospace;
   font-size: 16px;
   font-weight: 700;
   color: var(--color-outline);
@@ -125,106 +217,3 @@
 }
 
 .menuItem:hover { background: var(--color-surface-highest); }
-
-/* Badges */
-.badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-/* Level */
-.levelRow {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-  margin-top: auto;
-}
-
-.levelLabel {
-  color: var(--color-on-surface-dim);
-}
-
-.levelNum {
-  font-family: var(--font-serif), serif;
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--color-on-surface);
-  line-height: 1;
-}
-
-/* HP */
-.hpSection {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.hpLabelRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.hpValues {
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  color: var(--color-on-surface-dim);
-}
-
-.hpTrack {
-  height: 6px;
-  background: var(--color-surface-highest);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.hpFill {
-  height: 100%;
-  border-radius: var(--radius-full);
-  transition: width var(--transition-normal), background-color var(--transition-normal);
-}
-
-/* Stats footer */
-.statsRow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--color-outline-dim);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.statLabel {
-  color: var(--color-on-surface-dim);
-}
-
-.statVal {
-  font-family: var(--font-mono), monospace;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-on-surface);
-}
-
-.statDivider {
-  width: 1px;
-  height: 24px;
-  background: var(--color-outline-dim);
-}

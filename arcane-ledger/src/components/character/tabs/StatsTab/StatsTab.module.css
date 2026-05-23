@@ -136,18 +136,19 @@
 
 .hexAbbr {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--color-gold);
+  letter-spacing: 0.12em;
+  color: #6b5520;
   line-height: 1;
+  text-transform: uppercase;
 }
 
 .hexScore {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
-  color: var(--color-on-surface);
+  color: #2a1f0a;
   line-height: 1;
   background: transparent;
   border: none;
@@ -162,7 +163,7 @@
   font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 700;
-  color: var(--color-gold);
+  color: #2a1f0a;
   background: transparent;
   border: none;
   border-bottom: 1.5px solid var(--color-gold);
@@ -178,8 +179,13 @@
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  color: var(--color-on-surface-dim);
+  color: #5a4010;
   line-height: 1;
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.35);
+  border-radius: 3px;
+  padding: 1px 4px;
+  margin-top: 1px;
 }
 
 /* Center label */

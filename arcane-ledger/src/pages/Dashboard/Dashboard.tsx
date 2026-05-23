@@ -30,7 +30,7 @@ export default function Dashboard() {
     <div className={`parchment-bg ${s.root}`}>
       <header className={s.header}>
         <div className={s.titleRow}>
-          <D20Icon size={28} className={s.d20} />
+          <D20Icon size={32} className={s.d20} />
           <h1 className={s.title}>Мої персонажі</h1>
         </div>
         <div className="ornament-divider" />

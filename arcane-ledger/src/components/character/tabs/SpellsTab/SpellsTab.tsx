@@ -185,17 +185,14 @@ function SlotCoins({ slot, onUse, onRestore }: { slot: SpellSlotLevel; onUse: ()
   const remaining = slot.max - slot.used
   return (
     <div className={s.slotRow}>
-      <div className={s.slotCoins}>
-        {Array.from({ length: slot.max }).map((_, i) => (
-          <button
-            key={i}
-            className={`${s.slotCoin} ${i >= remaining ? s.slotCoinUsed : ''}`}
-            onClick={i < remaining ? onUse : onRestore}
-            title={i < remaining ? 'Використати слот' : 'Відновити слот'}
-          />
-        ))}
-      </div>
-      <span className={s.slotCount}>{remaining}/{slot.max}</span>
+      <button
+        className={`${s.slotLevelCircle} ${remaining === 0 ? s.slotLevelCircleEmpty : ''}`}
+        onClick={remaining > 0 ? onUse : onRestore}
+        title={remaining > 0 ? 'Використати слот' : 'Відновити слот'}
+      >
+        <span className={s.slotLevelNum}>{slot.level}</span>
+        <span className={s.slotLevelRemain}>{remaining}/{slot.max}</span>
+      </button>
     </div>
   )
 }
@@ -290,7 +287,6 @@ export default function SpellsTab() {
             <div className={s.slotsGrid}>
               {char.spellSlots.map(slot => (
                 <div key={slot.level} className={s.slotBlock}>
-                  <span className={s.slotLabel}>{slot.level}-й</span>
                   <SlotCoins
                     slot={slot}
                     onUse={() => useSlot(slot.level)}

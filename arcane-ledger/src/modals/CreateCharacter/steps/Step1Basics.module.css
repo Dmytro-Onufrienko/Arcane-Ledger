@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
-  padding: var(--space-6) var(--space-8);
+  padding: var(--space-6) var(--space-10);
 }
 
 .field {
@@ -20,10 +20,10 @@
   color: var(--color-on-surface-dim);
 }
 
-/* Underline-style name input */
+/* Underline name input */
 .nameInput {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: 26px;
   color: var(--color-on-surface);
   background: transparent;
   border: none;
@@ -32,42 +32,39 @@
   width: 100%;
   transition: border-color var(--transition-fast);
 }
-
-.nameInput::placeholder { color: var(--color-outline-dim); }
+.nameInput::placeholder { color: var(--color-outline-dim); font-style: italic; }
 .nameInput:focus { border-bottom-color: var(--color-gold); outline: none; }
 
 /* Alignment */
-.alignLabel {
-  color: var(--color-on-surface-dim);
-}
-
 .alignGrid {
   display: grid;
-  grid-template-columns: repeat(3, 56px);
+  grid-template-columns: repeat(3, 72px);
   gap: var(--space-2);
 }
 
 .alignBtn {
-  height: 40px;
-  border: 1.5px solid var(--color-outline);
+  height: 48px;
+  border: 1.5px solid rgba(119,119,113,0.5);
   border-radius: var(--radius-md);
-  background: var(--color-surface);
+  background: linear-gradient(180deg, rgba(245,237,217,0.9) 0%, rgba(224,214,188,0.9) 100%);
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 700;
   color: var(--color-on-surface);
-  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(31,28,15,0.12), inset 0 1px 0 rgba(255,255,255,0.5);
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .alignBtn:hover {
   border-color: var(--color-gold);
-  background: var(--color-surface-high);
+  background: linear-gradient(180deg, rgba(255,240,180,0.8) 0%, rgba(220,190,120,0.8) 100%);
 }
 
 .alignActive {
-  background: var(--color-gold) !important;
-  border-color: var(--color-gold) !important;
-  color: var(--color-primary) !important;
+  background: linear-gradient(180deg, #e9c349 0%, #c9922a 100%) !important;
+  border-color: #b07820 !important;
+  color: #3a2800 !important;
+  box-shadow: 0 1px 4px rgba(180,120,0,0.3), inset 0 1px 0 rgba(255,240,180,0.5) !important;
 }
 
 .alignFull {
@@ -76,6 +73,7 @@
   font-weight: 700;
   letter-spacing: var(--tracking-caps);
   color: var(--color-on-surface-dim);
+  margin-top: var(--space-1);
 }
 
 .alignFull span { color: var(--color-secondary); }

@@ -3,19 +3,42 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  min-height: 220px;
+  gap: var(--space-3);
+  min-height: 190px;
   width: 100%;
   cursor: pointer;
   background: none;
   border: none;
   padding: var(--space-6);
+  border-radius: var(--radius-md);
+  border: 2px dashed rgba(119, 119, 113, 0.45);
+  transition: border-color var(--transition-normal), background var(--transition-normal);
+}
+
+.card:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  background: rgba(212, 175, 55, 0.04);
+}
+
+.plusWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(119, 119, 113, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-normal), background var(--transition-normal);
+}
+
+.card:hover .plusWrap {
+  border-color: rgba(212, 175, 55, 0.65);
+  background: rgba(212, 175, 55, 0.08);
 }
 
 .plus {
-  font-family: var(--font-serif), serif;
-  font-size: 48px;
-  font-weight: 400;
+  font-size: 28px;
+  font-weight: 300;
   color: var(--color-outline);
   line-height: 1;
   transition: color var(--transition-fast);
@@ -23,8 +46,8 @@
 
 .label {
   font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
   font-style: italic;
-  font-size: 14px;
   color: var(--color-on-surface-dim);
   transition: color var(--transition-fast);
 }
