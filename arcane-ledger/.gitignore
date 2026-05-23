@@ -1,0 +1,10 @@
+node_modules/
+out/
+dist/
+*.local
+
+# electron-builder
+release/
+
+# OS
+.DS_Store

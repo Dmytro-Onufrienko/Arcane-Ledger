@@ -1,0 +1,89 @@
+{
+  "name": "arcane-ledger",
+  "version": "1.0.0",
+  "description": "D&D 5e character manager",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "pack": "yarn build && electron-builder",
+    "pack:mac": "yarn build && electron-builder --mac",
+    "pack:win": "yarn build && electron-builder --win",
+    "postinstall": "electron-rebuild -f -w better-sqlite3",
+    "rebuild": "electron-rebuild -f -w better-sqlite3"
+  },
+  "dependencies": {
+    "@tiptap/core": "^3.23.6",
+    "@tiptap/extension-link": "^2.7.4",
+    "@tiptap/extension-task-item": "^2.7.4",
+    "@tiptap/extension-task-list": "^2.7.4",
+    "@tiptap/extension-underline": "^2.7.4",
+    "@tiptap/pm": "^3.23.6",
+    "@tiptap/react": "^2.7.4",
+    "@tiptap/starter-kit": "^2.7.4",
+    "better-sqlite3": "^12.10.0",
+    "framer-motion": "^11.3.0",
+    "lucide-react": "^0.441.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.26.2",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^3.0.0",
+    "@electron/rebuild": "^4.0.4",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.5.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "electron": "41.7.0",
+    "electron-builder": "^25.0.5",
+    "electron-vite": "^5.0.0",
+    "typescript": "^5.6.2",
+    "vite": "7.3.3"
+  },
+  "build": {
+    "appId": "com.arcanyledger.app",
+    "productName": "Arcane Ledger",
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/better-sqlite3/**/*",
+      "**/node_modules/bindings/**/*",
+      "**/node_modules/file-uri-to-path/**/*"
+    ],
+    "files": [
+      "out/**/*",
+      "node_modules/**/*",
+      "!node_modules/.cache/**/*"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "category": "public.app-category.games"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

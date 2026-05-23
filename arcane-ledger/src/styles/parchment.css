@@ -1,0 +1,114 @@
+/* === Reusable parchment / ornament classes === */
+
+/* Base parchment background with texture */
+.parchment-bg {
+  background-color: var(--color-bg);
+  background-image: url('./textures/parchment.png');
+  background-repeat: repeat;
+  background-size: 512px 512px;
+}
+
+/* Gold border frame (inset) */
+.gold-border {
+  border: 1px solid var(--color-gold);
+  box-shadow: inset 0 0 0 3px rgba(212, 175, 55, 0.15),
+              0 0 0 1px rgba(212, 175, 55, 0.08);
+}
+
+/* Thick outer frame with double-line effect */
+.gold-frame {
+  border: 2px solid var(--color-gold);
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 175, 55, 0.3),
+    inset 0 0 0 4px rgba(212, 175, 55, 0.06),
+    0 0 0 1px rgba(212, 175, 55, 0.15);
+}
+
+/* Scroll-style card frame */
+.scroll-frame {
+  background-color: var(--color-surface);
+  border: 1px solid rgba(119, 119, 113, 0.5);
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 1px 3px rgba(31, 28, 15, 0.08);
+}
+
+/* Dashed outline for "new" cards */
+.dashed-frame {
+  border: 2px dashed var(--color-outline-dim);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.dashed-frame:hover {
+  border-color: var(--color-gold);
+  box-shadow: var(--glow-gold-sm);
+}
+
+/* Horizontal ornament divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-gold);
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gold-dim) 20%,
+    var(--color-gold) 50%,
+    var(--color-gold-dim) 80%,
+    transparent
+  );
+}
+.ornament-divider::before { background: linear-gradient(to left, transparent, var(--color-gold-dim) 20%, var(--color-gold) 50%, var(--color-gold-dim) 80%, transparent); }
+
+/* Gold pill badge */
+.gold-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  background: var(--color-secondary-container);
+  color: var(--color-secondary);
+  border-radius: var(--radius-full);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Dark pill (modifier on dark bg) */
+.dark-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--color-gold);
+  border-radius: var(--radius-full);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Portrait frame — skeuomorphic old painting style */
+.portrait-frame {
+  border: 3px solid var(--color-gold);
+  box-shadow:
+    inset 0 0 0 2px rgba(212, 175, 55, 0.25),
+    inset 0 0 12px rgba(31, 28, 15, 0.3),
+    0 2px 8px rgba(31, 28, 15, 0.2);
+  background-color: var(--color-surface-highest);
+  overflow: hidden;
+}
+
+/* Gold inner glow on hover (for cards) */
+.hover-gold-glow {
+  transition: box-shadow var(--transition-normal);
+}
+.hover-gold-glow:hover {
+  box-shadow: inset 0 0 16px rgba(212, 175, 55, 0.12), var(--shadow-card);
+}
